@@ -4,5 +4,10 @@ func main() {
 
 	cards := newDeck()
 
-	cards.print()
+	// for multiple return values (both are deck)
+	hand, remainingDeck := deal(cards, 5)
+
+	hand.print()
+
+	remainingDeck.print()
 }

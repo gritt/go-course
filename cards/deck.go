@@ -26,3 +26,11 @@ func (d deck) print() {
 		fmt.Println(i, card)
 	}
 }
+
+// return multiple values from functions (deck, deck)
+func deal(d deck, handSize int) (deck, deck) {
+
+	// everything from start till > handSize
+	// everything from handSize till end
+	return d[:handSize], d[handSize:]
+}
