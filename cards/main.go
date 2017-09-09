@@ -4,7 +4,11 @@ func main() {
 
 	cards := newDeck()
 
-	cards.saveToFile("cards")
+	cards.shuffle()
+	//cards := newDeckFromFile("cards")
+
+	cards.print()
+	//cards.saveToFile("cards")
 
 	// for multiple return values (both are deck)
 	//hand, remainingDeck := deal(cards, 5)

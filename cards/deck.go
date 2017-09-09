@@ -5,6 +5,8 @@ import (
 	"strings"
 	"io/ioutil"
 	"os"
+	"math/rand"
+	"time"
 )
 
 type deck []string
@@ -69,4 +71,19 @@ func newDeckFromFile(filename string) deck {
 
 	// cause the deck type is a slice os string
 	return deck(s)
+}
+
+// randomize the working deck, without return
+func (d deck)shuffle() {
+
+	// current time unique unixnano, is the source for rand numbers
+	s := rand.NewSource(time.Now().UnixNano())
+
+	r := rand.New(s)
+
+	for i := range d {
+		np := r.Intn(len(d) - 1)
+
+		d[i], d[np] = d[np], d[i]
+	}
 }
