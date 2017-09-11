@@ -15,8 +15,8 @@ func main() {
 
 	// attributes are defined, but nil
 	var alex person
-	//alex.firstName = "Alex"
-	//alex.lastName = "Anderson"
+	alex.firstName = "Alex"
+	alex.lastName = "Anderson"
 
 
 	// print struct and attributes
