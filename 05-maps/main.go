@@ -4,29 +4,18 @@ import "fmt"
 
 func main() {
 
-	// define a empty map, where all keys will be int, and values will be string
-	//var colors map[int]string
+	colors := map[string]string {
+		"red": "#ff0000",
+		"white": "#ffffff",
+		"gray": "#cccccc",
+	}
 
-	// A new, empty map value is made using the built-in function make, which takes the map type and an optional capacity hint as arguments:
-	//
-	// make(map[string]int)
-	// make(map[string]int, 100)
-	// The initial capacity does not bound its size: maps grow to accommodate the number of items stored in them, with the exception of nil maps. A nil map is equivalent to an empty map except that no elements may be added.
+	printMap(colors)
+}
 
-	// another syntax
-	colors := make(map[int]string)
-
-	// another syntax
-	//colors := map[int]string {
-	//	9: "#ff0000",
-	//	2: "#ffffff",
-	//}
-
-	// add to map
-	colors[10] = "#yellow"
-
-	// delete from map
-	delete(colors, 10)
-
-	fmt.Println(colors)
+// has to know the map structure
+func printMap(c map[string]string)  {
+	for color, hex := range c {
+		fmt.Println("hexcode for color", color, "is", "hex", hex)
+	}
 }
