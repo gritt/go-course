@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// go automatically matches interfaces and type methods
+// do not have to explicitly declare that the type implements an interface
 type bot interface {
 	getGreeting() string
 }
