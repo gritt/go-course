@@ -2,6 +2,9 @@ package main
 
 import "fmt"
 
+type bot interface {
+	getGreeting() string
+}
 type englishBot struct {}
 type spanishBot struct {}
 
@@ -10,21 +13,15 @@ func main() {
 	sp := spanishBot{}
 
 
-	//todo, use interfaces to make reuse of printGreeting
+	// both bots use bot interface
 	printGreeting(eb)
 	printGreeting(sp)
 }
 
-// cannot overload functions, even they have different signature (args)
-func printGreeting(eb englishBot) {
-	fmt.Println(eb.getGreeting())
+// receive the interface as type
+func printGreeting(b bot) {
+	fmt.Println(b.getGreeting())
 }
-
-func printGreeting(sp englishBot)  {
-	fmt.Println(sp.getGreeting())
-}
-
-
 
 // omitting the value "eb" as var will not be used
 func (englishBot)getGreeting() string {
