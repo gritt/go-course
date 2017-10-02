@@ -11,9 +11,11 @@ func main () {
     resp, err := http.Get("http://google.com")
 
     if err != nil {
-      fmt.Println("Error", err)
+      fmt.Println("Error:", err)
       os.Exit(1)
     }
 
-    fmt.Println(resp)
+    b := []byte
+
+    fmt.Println(resp.Body.Read(b))
 }
