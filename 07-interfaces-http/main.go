@@ -1,21 +1,22 @@
 package main
 
 import (
-  "net/http"
-  "os"
-  "fmt"
+	"fmt"
+	"net/http"
+	"os"
 )
 
-func main () {
+func main() {
 
-    resp, err := http.Get("http://google.com")
+	resp, err := http.Get("http://google.com")
 
-    if err != nil {
-      fmt.Println("Error:", err)
-      os.Exit(1)
-    }
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
 
-    b := []byte
-
-    fmt.Println(resp.Body.Read(b))
+	// creates an empty 99999 byte slice to be filled by the Read()
+	bs := make([]byte, 99999)
+	resp.Body.Read(bs)
+	fmt.Println(string(bs))
 }
