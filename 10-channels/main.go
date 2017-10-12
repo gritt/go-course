@@ -6,10 +6,14 @@ import (
 	"os"
 )
 
+// by default go tries to use one core, routines are handled by the go scheduler
+// on one core then can run concurently, on more cpus they are able to run trully in parallel
+
+// scheduler run one thread on each logical core
+// this behaviour can be changed
 func main() {
 
 	// website status checker
-
 	l := []string{
 		"http://google.com",
 		"http://facebook.com",
@@ -26,11 +30,6 @@ func main() {
 
 // this is the "blocking call",
 // it freezes the for loop (caller) till it get a response
-// to fix it, this whole logic can be executed in a new routine, like a thread
-
-// by default go tries to use one core, routines then are handled by the go scheduler
-// scheduler run one thread on each "logical" (!= virtual) core
-// if more than one core is available we can change the default behavior easily
 func check(u string) {
 	_, err := http.Get(u)
 	if err != nil {
