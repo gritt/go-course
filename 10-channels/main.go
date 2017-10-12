@@ -38,9 +38,21 @@ func main() {
 
 		// not a great idea to pause the main routine,
 		// as child routines will send data through the channel, a this main one cannot be sleeping
-		time.Sleep(5 * time.Second)
+		//time.Sleep(5 * time.Second)
+		//go check(i, c)
 
-		go check(i, c)
+		// warning! when referencing a var which is being used / maintaned by another go routine
+		// we never ever attempt to reference the same var inside of two diff routines
+		// to solve it, routines have to receive arguments by value, (if they'll use on startup time)
+
+		// function litera / lambda / unamed function - wrap some code to execute sometime in future
+		go func(link string) {
+			time.Sleep(5 * time.Second)
+			check(link, c)
+		}(i)
+
+		// never try to access the same variable from a diff child routines
+		// only share inf with a the child / new routine by passing it as arg, or communicating though the chanell
 	}
 
 	// same as
@@ -52,6 +64,7 @@ func main() {
 }
 
 func check(u string, c chan string) {
+
 	_, err := http.Get(u)
 
 	if err != nil {
