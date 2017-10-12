@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 // by default go tries to use one core, routines are handled by the go scheduler
@@ -34,6 +35,11 @@ func main() {
 	// wait for the channel to retunr some value, when it return, assigns to i
 	for i := range c {
 		// receive from chanell, blocking call
+
+		// not a great idea to pause the main routine,
+		// as child routines will send data through the channel, a this main one cannot be sleeping
+		time.Sleep(5 * time.Second)
+
 		go check(i, c)
 	}
 
