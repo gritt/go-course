@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 )
 
 // by default go tries to use one core, routines are handled by the go scheduler
@@ -21,11 +20,13 @@ func main() {
 		"http://golang.org",
 	}
 
-	for _, u := range l {
-		check(u)
-	}
+	// because of the routine_bug.png, we use channels
+	// channels are ways of communication bewteeen routines / they're aware of routines
+	// channels are typed, information sent through them must be typed
 
-	os.Exit(1)
+	for _, u := range l {
+		go check(u)
+	}
 }
 
 // this is the "blocking call",
@@ -36,6 +37,5 @@ func check(u string) {
 		fmt.Println("this may be down", u)
 		return
 	}
-
 	fmt.Println(u, "is up")
 }
