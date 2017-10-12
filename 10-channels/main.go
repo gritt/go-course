@@ -31,24 +31,31 @@ func main() {
 	}
 
 	// infinite loop
-	for {
+	// wait for the channel to retunr some value, when it return, assigns to i
+	for i := range c {
 		// receive from chanell, blocking call
-		go check(<-c, c)
+		go check(i, c)
 	}
+
+	// same as
+	// for {
+	// 	// receive from chanell, blocking call
+	// 	go check(<-c, c)
+	// }
+
 }
 
-// this is the "blocking call",
-// it freezes the for loop (caller) till it get a response
 func check(u string, c chan string) {
 	_, err := http.Get(u)
+
 	if err != nil {
 		fmt.Println("this may be down", u)
-
 		// send the url to the channel
 		c <- u
 		return
 	}
 
+	// send the url to the channel
 	fmt.Println(u, "is up")
 	c <- u
 }
