@@ -20,22 +20,35 @@ func main() {
 		"http://golang.org",
 	}
 
+	// channel to share strings between routines
+	c := make(chan string)
+
 	// because of the routine_bug.png, we use channels
 	// channels are ways of communication bewteeen routines / they're aware of routines
 	// channels are typed, information sent through them must be typed
 
 	for _, u := range l {
-		go check(u)
+		go check(u, c)
 	}
+
+	// receive from channel
+	//var <- channel
+	fmt.Println(<-c)
+	// RECEIVING messages from a channel is a blocking call / line of code
 }
 
 // this is the "blocking call",
 // it freezes the for loop (caller) till it get a response
-func check(u string) {
+func check(u string, c chan string) {
 	_, err := http.Get(u)
 	if err != nil {
 		fmt.Println("this may be down", u)
+
+		// send a message to a channel
+		c <- "might be down i think"
 		return
 	}
+
 	fmt.Println(u, "is up")
+	c <- "yep, its up"
 }
