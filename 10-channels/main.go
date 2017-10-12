@@ -31,10 +31,12 @@ func main() {
 		go check(u, c)
 	}
 
-	// receive from channel
-	//var <- channel
-	fmt.Println(<-c)
-	// RECEIVING messages from a channel is a blocking call / line of code
+	for i := 0; i < len(l); i++ {
+		// receive from channel
+		//var <- channel
+		fmt.Println(<-c)
+		// RECEIVING messages from a channel is a blocking call / line of code
+	}
 }
 
 // this is the "blocking call",
