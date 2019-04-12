@@ -7,7 +7,7 @@ import (
 )
 
 // by default go tries to use one core, routines are handled by the go scheduler
-// on one core then can run concurently, on more cpus they are able to run trully in parallel
+// on one core then can run concurrently, on more cpus they are able to run truly in parallel
 
 // scheduler run one thread on each logical core
 // this behaviour can be changed
@@ -25,27 +25,27 @@ func main() {
 	c := make(chan string)
 
 	// because of the routine_bug.png, we use channels
-	// channels are ways of communication bewteeen routines / they're aware of routines
+	// channels are ways of communication between routines / they're aware of routines
 	// channels are typed, information sent through them must be typed
 	for _, u := range l {
 		go check(u, c)
 	}
 
 	// infinite loop
-	// wait for the channel to retunr some value, when it return, assigns to i
+	// wait for the channel to return some value, when it return, assigns to i
 	for i := range c {
-		// receive from chanell, blocking call
+		// receive from chanel, blocking call
 
 		// not a great idea to pause the main routine,
 		// as child routines will send data through the channel, a this main one cannot be sleeping
 		//time.Sleep(5 * time.Second)
 		//go check(i, c)
 
-		// warning! when referencing a var which is being used / maintaned by another go routine
+		// warning! when referencing a var which is being used / maintained by another go routine
 		// we never ever attempt to reference the same var inside of two diff routines
 		// to solve it, routines have to receive arguments by value, (if they'll use on startup time)
 
-		// function litera / lambda / unamed function - wrap some code to execute sometime in future
+		// function literal / lambda / unnamed function - wrap some code to execute sometime in future
 		go func(link string) {
 			time.Sleep(5 * time.Second)
 			check(link, c)
@@ -57,13 +57,15 @@ func main() {
 
 	// same as
 	// for {
-	// 	// receive from chanell, blocking call
+	// 	// receive from chanel, blocking call
 	// 	go check(<-c, c)
 	// }
-
 }
 
-func check(u string, c chan string) {
+// signature block operation in the channel:
+// channel given to READ/RECEIVE c <- chan
+// channel given to WRITE/SEND c chan <-
+func check(u string, c chan<- string) {
 
 	_, err := http.Get(u)
 
